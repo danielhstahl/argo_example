@@ -1,0 +1,46 @@
+# Basic example
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dag-flow-
+spec:
+  entrypoint: flow
+  templates:
+  - name: python-A
+    script:
+      image: python:alpine3.6
+      command: [python]
+      source: |
+        print("A")
+  - name: python-B
+    script:
+      image: python:alpine3.6
+      command: [python]
+      source: |
+        print("B")
+  - name: python-C
+    script:
+      image: python:alpine3.6
+      command: [python]
+      source: |
+        print("C")
+  - name: python-D
+    script:
+      image: python:alpine3.6
+      command: [python]
+      source: |
+        print("D")
+  - name: flow
+    dag:
+      tasks:
+      - name: python-A
+        template: python-A
+      - name: python-B
+        dependencies: [python-A]
+        template: python-B
+      - name: python-C
+        dependencies: [python-A]
+        template: python-C
+      - name: python-D
+        dependencies: [python-B, python-C]
+        template: python-D
