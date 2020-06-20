@@ -8,10 +8,11 @@ spec:
   templates:
   - name: python-A
     script:
-      image: python:alpine3.6
-      command: [python]
-      source: |
-        print("A")
+      image: phillyfan1138/livysubmit:v3
+      command: [python, livytest.py]
+      #source: |
+      # pip install requests;
+      #  python livytest.py
   - name: python-B
     script:
       image: python:alpine3.6
